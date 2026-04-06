@@ -178,7 +178,7 @@ fun LoadingScreen(onTimeout: () -> Unit) {
             Spacer(modifier = Modifier.weight(0.15f))
 
             Text(
-                text = "Icy\nFishing",
+                text = "Icy Fishing\nWinter",
                 fontFamily = GameFont,
                 fontSize = 52.sp,
                 color = Color.White,
