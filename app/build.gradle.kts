@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "dj.music.mixer.sound.effe"
+    namespace = "com.naturalmotion.customstreetrac"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -18,11 +18,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "dj.music.mixer.sound.effe"
+        applicationId = "com.naturalmotion.customstreetrac"
         minSdk = 28
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

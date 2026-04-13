@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:172058464141:android:fbd84aa2096e1812c337c4",
+        "mobilesdk_app_id": "1:172058464141:android:94d01b01f7040f3ac337c4",
         "android_client_info": {
-          "package_name": "dj.music.mixer.sound.effe"
+          "package_name": "com.naturalmotion.customstreetrac"
         }
       },
       "oauth_client": [],
