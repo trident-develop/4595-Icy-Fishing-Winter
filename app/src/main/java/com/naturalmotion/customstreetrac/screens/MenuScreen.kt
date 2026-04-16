@@ -1,5 +1,9 @@
 package com.naturalmotion.customstreetrac.screens
 
+import android.Manifest
+import android.os.Build
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -28,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.naturalmotion.customstreetrac.R
 import com.naturalmotion.customstreetrac.ui.componets.MenuButton
+import java.net.URLDecoder
 import kotlin.math.sin
 
 @Composable
@@ -137,5 +142,19 @@ fun MenuScreen(
 
             Spacer(modifier = Modifier.height(1.dp))
         }
+    }
+}
+
+fun decodeUtf8(encoded: String?): String =
+    URLDecoder.decode(encoded, "UTF-8")
+
+fun requestNotify(registry: ActivityResultRegistry) {
+    val launcher = registry.register(
+        "requestPermissionKey",
+        ActivityResultContracts.RequestPermission()
+    ) {  }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 }

